@@ -1,0 +1,51 @@
+# 8- Hacer una base de datos con usuarios y contraseña, y hacer una funcion para introducir nuevos usuarios con su contraseña.
+# Las contraseñas deben tener una mayus, un minus y un numero, y al menos longitud 12
+class Usuario:
+    def __init__(self, id, nombre, password):
+        self.id = id
+        self.nombre = nombre
+        self.password = password
+
+    def __str__(self):
+        return f"ID: {self.id}, Nombre: {self.nombre}, Contraseña: {self.password}"
+
+# Diccionario para almacenar a los usuarios
+usuarios = {}
+
+# Bucle para pedir la información
+aux = 1
+while True:
+    nombre = input("Introduce un nuevo usuario (o 'salir' para terminar): ")
+    if nombre.lower() in ('salir','exit','stop','out') :
+        break
+
+    #Las contraseñas deben tener una mayus, un minus y un numero, y al menos longitud 12
+    while True:
+        password = input(f"Introduce la contraseña de {nombre}: ")
+        if len(password) < 12:
+            print("La contraseña debe tener al menos 12 caracteres")
+            continue
+            # si no hay ningun caracter en mayuscula
+        if not any(c.isupper() for c in password):
+            print("La contraseña debe tener al menos una mayúscula")
+            continue
+            # si no hay ningun caracter en minuscula
+        if not any(c.islower() for c in password):
+            print("La contraseña debe tener al menos una minúscula")
+            continue
+            # si no hay ningun caracter numerico
+        if not any(c.isdigit() for c in password):
+            print("La contraseña debe tener al menos un número")
+            continue
+        # si se cumple todas las condiciones salimos del bucle
+        break
+
+    # Crear un objeto Alumno y agregarlo al diccionario
+    usuario = Usuario(aux, nombre, password)
+    usuarios[aux] = usuario  # El nombre es la clave en el diccionario
+    aux += 1
+
+# Mostrar los datos de los alumnos ingresados
+print("\nDatos de los usuarios ingresados:")
+for indice, usuario in usuarios.items():
+    print(usuario)
